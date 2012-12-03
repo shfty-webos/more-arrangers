@@ -28,23 +28,28 @@
 		enyo.kind({
 			name: "App",
 			classes: "enyo-unselectable",
+			layoutKind: "FittableRowsLayout",
+			panelArrangers: [
+				{name: "BoxTurnArranger", arrangerKind: "BoxTurnArranger"},
+				{name: "HFlipArranger", arrangerKind: "HFlipArranger"},
+				{name: "PageSpinArranger", arrangerKind: "PageSpinArranger"},
+				{name: "PageTurnArranger", arrangerKind: "PageTurnArranger"},
+				{name: "PushPopArranger", arrangerKind: "PushPopArranger"},
+				{name: "SladeArranger", arrangerKind: "SladeArranger"},
+			],
 			components: [
 				{kind: "onyx.Toolbar", components:[
 					{content: "More Arrangers Demo"},
-					{kind: "onyx.PickerDecorator", components:[
-						{},
-						{kind: "onyx.Picker", components:[
-							{content: "Foo", active: true},
-							{content: "Bar"},
-							{content: "Baz"}
-						]}
-					]}
+					{kind: "onyx.MenuDecorator", components: [
+						{content:"Arranger"},
+						{name:"arrangerPicker", kind: "onyx.Menu", floating:true, onSelect:"arrangerSelected"}
+					]},
 				]},
 				{name: "Panels",
 				kind: "Panels",
-				classes: "panels enyo-fit",
+				classes: "panels",
 				style: "margin:5%; overflow:visible;",
-				arrangerKind: "BoxTurnArranger",
+				fit: true,
 				components:[
 					{name: "left", style: "background: beige;", components: [
 						{content: "Left"}
@@ -57,19 +62,27 @@
 					]},
 				]}
 			],
-			rendered: function() {
-				this.size();
+			create: function() {
 				this.inherited(arguments);
-				
+				for (var i=0; i<this.panelArrangers.length; i++) {
+					this.$.arrangerPicker.createComponent({content:this.panelArrangers[i].name});
+				}
 			},
-			resizeHandler: function() {
-				this.size();
-				this.inherited(arguments);
+			arrangerSelected: function(inSender, inEvent) {
+				var sp = this.$.Panels;
+				var p = this.panelArrangers[inEvent.originator.indexInContainer()-1];
+				if (this.currentClass) {
+					sp.removeClass(this.currentClass)
+				}
+				if (p.classes) {
+					sp.addClass(p.classes);
+					this.currentClass = p.classes;
+				}
+				sp.setArrangerKind(p.arrangerKind);
+				if (enyo.Panels.isScreenNarrow()) {
+					this.setIndex(1);
+				}
 			},
-			size: function() {
-				var b = this.$.middle.getBounds();
-				this.$.body.applyStyle("width", (this.getBounds().width - b.width) + "px")
-			}
 		});
 		new App({fit: true}).write();
 	</script>
