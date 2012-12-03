@@ -8,22 +8,21 @@
 	destroy: function() {
 		var c$ = this.container.children;
 		for (var i=0, c; c=c$[i]; i++) {
-			this.boxTurnControl(c, 0, 0, 0, 1);
+			this.pageTurnControl(c, 0, 0, 0, 1);
 			c.setShowing(true);
 			c.resized();
 		}
 		this.inherited(arguments);
 	},
 	arrange: function(inC, inName) {
-		for (var i=0, c, z, a, s, o; c=inC[i]; i++) {
-			z = (i == 0) ? 1 : 0;
-			o = (i == inC.length - 1) ? 0 : 1;
+		for (var i = 0, c; c = inC[i]; i++) {
+			var o = (i == inC.length - 1) ? 0 : 1;
 			if(enyo.dom.canAccelerate) {
-				a = (i == inC.length - 1) ? -90 : 0;
-				this.arrangeControl(c, {zindex:z, angle:a, opacity:o});
+				var a = (i == inC.length - 1) ? -90 : 0;
+				this.arrangeControl(c, {angle:a, opacity:o});
 			}
 			else {
-				s = (i == inC.length - 1) ? -0.2 : 1;
+				var s = (i == inC.length - 1) ? -0.2 : 1;
 				this.arrangeControl(c, {scale:s, opacity:o});
 			}
 		}
@@ -33,6 +32,7 @@
 		var c$ = this.container.children;
 		for (var i=0, c; c=c$[i]; i++) {
 			c.setShowing(i == this.container.fromIndex || i == (this.container.toIndex));
+			c.applyStyle("z-index", -i);
 			if (c.showing) {
 				c.resized();
 			}
@@ -51,26 +51,22 @@
 		enyo.Arranger.positionControl(inControl, inArrangement);
 		var a = inArrangement.angle;
 		var s = inArrangement.scale;
-		var z = inArrangement.zindex;
 		var o = inArrangement.opacity;
 		if (o != null) {
-			this.boxTurnControl(inControl, a, s, z, o);
+			this.pageTurnControl(inControl, a, s, o);
 		}
 	},
-	boxTurnControl: function(inControl, inAngle, inScale, inZ, inOpacity) {
+	pageTurnControl: function(inControl, inAngle, inScale, inOpacity) {
 		var o = inOpacity;
-		var z = inZ;
 		if(enyo.dom.canAccelerate) {
 			var a = inAngle;
 			inControl.applyStyle(this.vendor + "transform-origin", "0 50% 0");
-			inControl.applyStyle(this.vendor + "transform", "rotateY(" + a + "deg) translateZ(" + z + "px)");
-			inControl.applyStyle("z-index", -o); //FIXME: z-indices clash and cause a flash when transitioning
+			inControl.applyStyle(this.vendor + "transform", "rotateY(" + a + "deg)");
 		}
 		else {
 			var s = inScale;
 			inControl.applyStyle(this.vendor + "transform-origin", "0 50%");
 			inControl.applyStyle(this.vendor + "transform", "scale(" + s + ", 1)");
-			inControl.applyStyle("z-index", -o); //FIXME: z-indices clash and cause a flash when transitioning
 		}
 		inControl.applyStyle("opacity", o);
 	},

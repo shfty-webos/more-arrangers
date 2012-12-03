@@ -8,7 +8,7 @@
 	destroy: function() {
 		var c$ = this.container.children;
 		for (var i=0, c; c=c$[i]; i++) {
-			this.boxTurnControl(c, 0, 1, 1);
+			this.pageSpinControl(c, 0, 1, 1);
 			c.setShowing(true);
 			c.resized();
 		}
@@ -62,10 +62,10 @@
 		var s = inArrangement.scale;
 		var o = inArrangement.opacity;
 		if (o != null) {
-			this.boxTurnControl(inControl, a, s, o);
+			this.pageSpinControl(inControl, a, s, o);
 		}
 	},
-	boxTurnControl: function(inControl, inAngle, inScale, inOpacity) {
+	pageSpinControl: function(inControl, inAngle, inScale, inOpacity) {
 		var o = inOpacity;
 		if(enyo.dom.canAccelerate) {
 			var a = inAngle;

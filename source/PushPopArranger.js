@@ -14,7 +14,6 @@
 		}
 		this.inherited(arguments);
 	},
-	//FIXME: Panels sometimes blink into view for a short time after a transition. Not entirely sure why.
 	arrange: function(inC, inName) {
 		for (var i=0, c, s, o; c=inC[i]; i++) {
 			o = (i == 0) ? 1 : 0;

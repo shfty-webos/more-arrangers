@@ -8,7 +8,7 @@
 	destroy: function() {
 		var c$ = this.container.children;
 		for (var i=0, c; c=c$[i]; i++) {
-			this.flipifyControl(c, 0, 1);
+			this.flipControl(c, 0, 1);
 			c.setShowing(true);
 			c.resized();
 		}
@@ -53,10 +53,10 @@
 		var a = inArrangement.angle;
 		var o = inArrangement.opacity;
 		if (a != null && o != null) {
-			this.flipifyControl(inControl, a, o);
+			this.flipControl(inControl, a, o);
 		}
 	},
-	flipifyControl: function(inControl, inAngle, inOpacity) {
+	flipControl: function(inControl, inAngle, inOpacity) {
 		var a = inAngle;
 		var o = inOpacity
 		if(enyo.dom.canAccelerate) {
