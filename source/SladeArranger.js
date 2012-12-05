@@ -72,6 +72,6 @@
 			inControl.applyStyle("-o-transform", "translate(" + t + "%,0)");
 			inControl.applyStyle("-ms-transform", "translate(" + t + "%,0)");
 		}
-		inControl.applyStyle("opacity", o);
+		enyo.Arranger.opacifyControl(inControl, inOpacity);
 	}
 });

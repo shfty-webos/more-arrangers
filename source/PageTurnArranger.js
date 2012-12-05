@@ -68,7 +68,7 @@
 			inControl.applyStyle(this.vendor + "transform-origin", "0 50%");
 			inControl.applyStyle(this.vendor + "transform", "scale(" + s + ", 1)");
 		}
-		inControl.applyStyle("opacity", o);
+		enyo.Arranger.opacifyControl(inControl, inOpacity);
 	},
 	getVendor: function() {
 		var prefix = '';
