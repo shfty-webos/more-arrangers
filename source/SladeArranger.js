@@ -8,11 +8,7 @@
 	destroy: function() {
 		var c$ = this.container.children;
 		for (var i=0, c; c=c$[i]; i++) {
-<<<<<<< HEAD
-			this.pushPopControl(c, 0, 1);
-=======
 			this.sladeControl(c, 0, 1);
->>>>>>> More Arrangers Demo: Add page
 			c.setShowing(true);
 			c.resized();
 		}
